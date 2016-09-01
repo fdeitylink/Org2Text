@@ -1,0 +1,110 @@
+===== Org2Text Tutorial and Help Guide =====
+============== By Carrotlord ===============
+Welcome to the Org2Text application. Org2Text is a program written in Mint that
+is designed to transform Cave Story's .org music files into a human readable
+format.
+
+You can also write your own text files and compile them into .org music. You
+may even find this easier than writing the music manually using OrgMaker.
+
+To run Org2Text, double-click the batch file RunOrg2Text.bat.
+
+You should now be in the program. If that didn't work, you might need to edit
+RunOrg2Text.bat so that it looks like this:
+
+@echo off
+title Org2Text
+"C:/Users/Program Files/Java/jre7/bin/java.exe" -Xss100m -Xmx400m -jar Org2Text.jar
+echo [Program Finished.]
+pause
+
+Or, if you're running a 64-bit OS with 32-bit Java, like this:
+
+@echo off
+title Org2Text
+"C:/Users/Program Files (x86)/Java/jre7/bin/java.exe" -Xss100m -Xmx400m -jar Org2Text.jar
+echo [Program Finished.]
+pause
+
+Once inside the program, Org2Text will ask you to provide the name of a .txt
+or .org file so that it can convert it. Supply the name, and a .txt file will
+be turned into an .org file, and vice versa.
+
+The format of Organya "source code" is quite simple. First you will see a
+series of values assigned to names using the equals sign:
+
+OrgVersion = 2
+Tempo = 108
+TimeSignature = 4/4
+StartingMeasure = 1
+EndingMeasure = 17
+StartingBeat = 0
+EndingBeat = 4080
+Frequency1 = 1000
+Frequency2 = 1000
+Frequency3 = 1000
+...
+
+These define the header data that comes at the start of every .org file.
+
+Next come the tracks. Each track has a series of notes and rests.
+
+track {
+R : 8
+A2 : 4 : 200 : 6
+R : 4
++1 : 2 : 200 : 6
++7 : 1 : 200 : 6
+-7 : 2 : 200 : 6
+R : 1
++7 : 1 : 200 : 6
+R : 1
+-5 : 2 : 200 : 6
++7 : 1 : 200 : 6
+-7 : 2 : 200 : 6
+R : 1
++7 : 1 : 200 : 6
+R : 1
+-10 : 2 : 200 : 6
++7 : 1 : 200 : 6
+-7 : 2 : 200 : 6
+R : 1
++7 : 1 : 200 : 6
+R : 1
+......
+}
+
+The letter 'R' signifies a rest, or pause in the music. In the above track, you
+can see that the first note played is a rest that lasts for 8 beats.
+The basic format of a note goes like this:
+
+<Note symbol> : <Note length> : <Volume bytes> : <Panning bytes>
+
+The note symbol can be written in scientific pitch notation. Examples include
+C#4 (C sharp, octave 4), Bb5 (B flat, octave five), E2 (E, octave 2).
+
+The note symbol can also be written relative to the last note. If the last
+note was a C4 (C, octave 4), and the next note has the symbol +1, then the
+next note will be one semitone higher. In other words, it will be C#4.
+
+You can use +12 to jump up an octave, or -12 to go down an octave.
+
+Next comes the note length. This is the number of beats that a note will be
+held for. To make a note that is 8 beats long, just put an 8 in the second
+slot.
+
+Third comes the volume bytes. The volume of the note is the value indicated
+by the volume bytes. For instance, if you want to have a note with a volume
+of 150, put 150 in this slot.
+
+Finally comes the panning bytes. The panning of the note is determined by this
+value. If you want the panning to be centered, use 6 in this slot.
+
+You can put comments on any line outside of tracks. There is no designated
+comment marker.
+
+===== Known Bugs =====
+--Sometimes when converting .org to .txt, certain tracks will not show up. This
+does not happen with .txt to .org.
+--Putting a comma separated list of numbers into the volume or panning slot
+messes up the .org file.
